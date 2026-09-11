@@ -6,6 +6,16 @@ size_t Strlen(const char*);
 char* Strcpy(char* , const char* );
 char* Strcat(char*, const char*);
 int Strcmp(const char*, const char*);
+void PrintArr(int*, size_t);
+
+void PrintArr(int* arr, size_t SIZE)
+{
+    for (size_t i = 0;i < SIZE;++i)
+    {
+        printf("%d ", *(arr + i));
+    }
+    printf("\n");
+}
 
 size_t Strlen(const char* s)
 {
@@ -21,6 +31,7 @@ int Puts(const char* s)
         putchar(*s);
         ++s;
     }
+
     putchar('\n');
     return 0;
 }
@@ -28,7 +39,8 @@ int Puts(const char* s)
 char* Strcpy(char* dest, const char* src)
 {
     size_t Size = Strlen(src);
-    for (int i = 0;i < Strlen(src);++i)
+
+    for (size_t i = 0;i < Strlen(src);++i)
     {
         *(dest + i) = src[i];
     }
@@ -39,15 +51,16 @@ char* Strcpy(char* dest, const char* src)
 
 char* Strcat(char* dest, const char* src)
 {
-    char* current = dest + Strlen(dest);
-    size_t Size = Strlen(src) + Strlen(dest);
-    int i = Strlen(dest);
-    for (int j = 0;j < Strlen(src);++j)
+    size_t SzSrc = Strlen(src);
+    size_t SzDest = Strlen(dest);
+
+    size_t i = SzDest;
+
+    for (size_t j = 0;j <= SzSrc;++j)
     {
         *(dest + i) = src[j];
         ++i;
     }
-    *(dest + Size) = 0;
 
     return dest;
 }
@@ -56,7 +69,7 @@ int Strcmp(const char* str1, const char* str2)
 {
     size_t max_size = (Strlen(str1) > Strlen(str2)) ? Strlen(str1) : Strlen(str2);
 
-    for (int i = 0; i < max_size; ++i)
+    for (size_t i = 0; i < max_size; ++i)
     {
         int s1 = *(str1 + i);
         int s2 = *(str2 + i);
@@ -67,4 +80,4 @@ int Strcmp(const char* str1, const char* str2)
     return 0;
 }
 
-#endif
+#endif // MYSTRING_H_INCLUDED
