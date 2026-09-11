@@ -3,7 +3,7 @@
 
 void Swap(int*, int*);
 void BubbleSort(int*, size_t, bool (*CompareFunc) (int*, int*));
-void QuickSort(int*, size_t, size_t, bool (*CompareFunc) (int*, int*));
+void QuickSort(int*, size_t, bool (*CompareFunc) (int*, int*), size_t);
 
 void Swap(int* a1, int* a2)
 {
@@ -12,8 +12,9 @@ void Swap(int* a1, int* a2)
     *a2 = temp;
 }
 
-void QuickSort(int* arr, size_t lo, size_t hi, bool (*CompareFunc) (int* a, int* b))
+void QuickSort(int* arr, size_t SIZE, bool (*CompareFunc) (int* a, int* b), size_t lo = 0)
 {
+    size_t  hi = SIZE - 1;
     if (lo >= hi) return;
 
     int pivot = *(arr + hi);
@@ -27,8 +28,8 @@ void QuickSort(int* arr, size_t lo, size_t hi, bool (*CompareFunc) (int* a, int*
         }
     }
     Swap(arr + i, arr + hi);
-    if (i != 0) QuickSort(arr, lo, i - 1, CompareFunc);
-    QuickSort(arr, i + 1, hi, CompareFunc);
+    if (i != 0) QuickSort(arr, i, CompareFunc, lo);
+    QuickSort(arr, hi + 1, CompareFunc, i + 1);
 }
 
 void BubbleSort(int* arr, size_t SIZE, bool (*CompareFunc) (int* a, int* b))
