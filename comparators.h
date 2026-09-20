@@ -11,7 +11,7 @@ int CompareUp(const void* value_a, const void* value_b)
     const int a = *(const int*) value_a;
     const int b = *(const int*) value_b;
 
-    return (a < b);
+    return (a - b);
 }
 
 int CompareDown(const void* value_a, const void* value_b)
@@ -19,7 +19,7 @@ int CompareDown(const void* value_a, const void* value_b)
     const int a = *(const int*) value_a;
     const int b = *(const int*) value_b;
 
-    return (a > b);
+    return (b - a);
 }
 
 int CompareStrs2(const void* a, const void* b)
