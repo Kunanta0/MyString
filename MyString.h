@@ -79,3 +79,5 @@ int Strcmp(const char* str1, const char* str2)
 
     return 0;
 }
+
+#endif // MYSTRING_H_INCLUDED
