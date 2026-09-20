@@ -2,48 +2,58 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <ctype.h>
 #include "MyString.h"
 #include "Sorters.h"
 #include "comparators.h"
 //const char* s0 = "Hello";
 
+size_t ReadFromFile(const char* name, const char* index[]);
+void PrintFile(const char* index[], size_t nlines);
+
 int main(void)
 {
-    /*char* s1 = (char*)calloc(10, sizeof(char));
-    for (int i = 0; i < 3; ++i)
-    {
-        s1[i] = 'A';
-    }
-    s1[3] = 'B';
-    s1[4] = '\0';
+    const char* index[10000];
+    const char* copy_index[10000];
+    size_t nlines = ReadFromFile("Eugene Onegin (2).txt", index);
+    ReadFromFile("Eugene Onegin (2).txt", copy_index);
+    //BubbleSort(index, nlines, sizeof(char*), CompareStrs);
+    BubbleSort(index, nlines, sizeof(char*), CompareStrs1);
+    PrintFile(index, nlines);
+    qsort(index, nlines, sizeof(char*), CompareStrs2);
+    PrintFile(index, nlines);
+    PrintFile(copy_index, nlines);
 
-    const char s2[] = {'H', 'E', 'L', 'L', 'O', '\0'};
-    Strcpy(s1, s2);
-    printf("%s\n", s1);*/
-
-    /*int Size = Strlen(s1);
-    printf("Strlen(%s) = %d\n", s1, Size);*/
-
-    //Puts("abcdef");
-
-    /*int ans = Strcmp("apples", "apple");
-
-    printf("Strcmp returns %d", ans);*/
-
-    int SIZE = 0;
-    scanf("%d", &SIZE);
-
-    int* data = (int *)calloc(SIZE, sizeof(int));
-
-    for (int i = 0;i < SIZE;++i)
-    {
-        scanf("%d", data + i);
-    }
-
-    //BubbleSort(data, SIZE, CompareUp);
-    QuickSort(data, 0, SIZE-1, CompareDown);
-
-    PrintArr(data, SIZE);
-
+    //clear_data(index, nlines);
     return 0;
+}
+
+size_t ReadFromFile(const char* name, const char* index[])
+{
+    FILE* file = fopen(name, "r");
+
+    size_t nlines = 0;
+    char buffer[10000] = "";
+
+    while (fgets(buffer, 200, file) != NULL)
+    {
+        if (Strcmp(buffer, "\n") != 0)
+        {
+            if ((strchr(buffer, '\n') == NULL) && (buffer[0] != '\0')) Strcat(buffer, "\n");
+            index[nlines++] = strdup(buffer);
+        }
+    }
+    fclose(file);
+
+    return nlines;
+}
+
+void PrintFile(const char* index[], size_t nlines)
+{
+    FILE* fo = fopen("OutputS.txt", "a");
+    for (int i = 0;i < nlines;++i) fprintf(fo, "%s", index[i]);
+
+    fprintf(fo, "\n************************************************************************************************\n");
+
+    fclose(fo);
 }
