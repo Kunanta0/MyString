@@ -16,11 +16,12 @@ int main(void)
     const char* index[10000];
     const char* copy_index[10000];
     size_t nlines = ReadFromFile("Eugene Onegin (2).txt", index);
-    ReadFromFile("Eugene Onegin (2).txt", copy_index);
+
+    memcpy(copy_index, index, nlines * sizeof(char*));
     //BubbleSort(index, nlines, sizeof(char*), CompareStrs);
-    BubbleSort(index, nlines, sizeof(char*), CompareStrs1);
+    qsort(index, nlines, sizeof(char*), CompareStrs1);
     PrintFile(index, nlines);
-    qsort(index, nlines, sizeof(char*), CompareStrs2);
+    BubbleSort(index, nlines, sizeof(char*), CompareStrs2);
     PrintFile(index, nlines);
     PrintFile(copy_index, nlines);
 
@@ -51,7 +52,7 @@ size_t ReadFromFile(const char* name, const char* index[])
 void PrintFile(const char* index[], size_t nlines)
 {
     FILE* fo = fopen("OutputS.txt", "a");
-    for (int i = 0;i < nlines;++i) fprintf(fo, "%s", index[i]);
+    for (size_t i = 0;i < nlines;++i) fprintf(fo, "%s", index[i]);
 
     fprintf(fo, "\n************************************************************************************************\n");
 
