@@ -10,6 +10,7 @@
 
 size_t ReadFromFile(const char* name, const char* index[]);
 void PrintFile(const char* index[], size_t nlines);
+void clear_data(const char* index[], size_t nlines);
 
 int main(void)
 {
@@ -18,14 +19,21 @@ int main(void)
     size_t nlines = ReadFromFile("Eugene Onegin (2).txt", index);
 
     memcpy(copy_index, index, nlines * sizeof(char*));
-    //BubbleSort(index, nlines, sizeof(char*), CompareStrs);
-    qsort(index, nlines, sizeof(char*), CompareStrs1);
+
+    QuickSort(index, nlines, sizeof(char*), CompareStrs1);
     PrintFile(index, nlines);
+
     BubbleSort(index, nlines, sizeof(char*), CompareStrs2);
     PrintFile(index, nlines);
+
     PrintFile(copy_index, nlines);
 
-    //clear_data(index, nlines);
+    clear_data(index, nlines);
+
+    int data[] = {1, 2, 3, 4, 5, 6};
+    QuickSort(data, 6, 4, CompareDown);
+    PrintArr(data, 6);
+
     return 0;
 }
 
@@ -36,7 +44,7 @@ size_t ReadFromFile(const char* name, const char* index[])
     size_t nlines = 0;
     char buffer[10000] = "";
 
-    while (fgets(buffer, 200, file) != NULL)
+    while (fgets(buffer, 500, file) != NULL)
     {
         if (Strcmp(buffer, "\n") != 0)
         {
@@ -57,4 +65,13 @@ void PrintFile(const char* index[], size_t nlines)
     fprintf(fo, "\n************************************************************************************************\n");
 
     fclose(fo);
+}
+
+void clear_data(const char* index[], size_t nlines)
+{
+    for (size_t i = 0; i < nlines;++i)
+    {
+        free((void*)(index[i]));
+        index[i] = NULL;
+    }
 }
