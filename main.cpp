@@ -29,6 +29,7 @@ int main(void)
     PrintFile(copy_index, nlines);
 
     clear_data(index, nlines);
+    clear_data(copy_index, nlines);
 
     int data[] = {1, 2, 3, 4, 5, 6};
     QuickSort(data, 6, 4, CompareDown);
