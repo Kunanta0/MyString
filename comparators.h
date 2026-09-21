@@ -3,8 +3,8 @@
 
 int CompareUp(const void*, const void*);
 int CompareDown(const void*, const void*);
-int CompareStrs1(const void*, const void*);
-int CompareStrs2(const void*, const void*);
+int CompareStrsStart(const void*, const void*);
+int CompareStrsEnd(const void*, const void*);
 
 int CompareUp(const void* value_a, const void* value_b)
 {
@@ -22,7 +22,7 @@ int CompareDown(const void* value_a, const void* value_b)
     return (b - a);
 }
 
-int CompareStrs2(const void* a, const void* b)
+int CompareStrsEnd(const void* a, const void* b)
 {
     const char* s1 = *(const char**) a;
     const char* s2 = *(const char**) b;
@@ -74,7 +74,7 @@ int CompareStrs2(const void* a, const void* b)
     return (unsigned char)* s1 - (unsigned char)* s2;
 }
 
-int CompareStrs1(const void* a, const void* b)
+int CompareStrsStart(const void* a, const void* b)
 {
     const char* s1 = *(const char**) a;
     const char* s2 = *(const char**) b;
