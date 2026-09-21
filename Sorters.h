@@ -16,15 +16,15 @@ void Swap(void* value_1, void* value_2, size_t SIZE)
     free(temp);
 }
 
-void QuickSort(void* data, size_t length, size_t SIZE, int (*CompareFunc) (const void* a, const void* b), size_t lo = 0)
+void QuickSort(void* data, size_t length, size_t SIZE, int (*CompareFunc) (const void* a, const void* b), size_t low_index = 0)
 {
     char* arr = (char *) data;
-    size_t hi = length - 1;
-    if (lo >= hi) return;
+    size_t high_index = length - 1;
+    if (low_index >= high_index) return;
 
-    void* pivot = arr + hi * SIZE;
-    size_t i = lo;
-    for (size_t j = lo; j < hi; ++j)
+    void* pivot = arr + high_index * SIZE;
+    size_t i = low_index;
+    for (size_t j = low_index; j < high_index; ++j)
     {
         void* arr2 = arr + j * SIZE;
 
@@ -36,8 +36,8 @@ void QuickSort(void* data, size_t length, size_t SIZE, int (*CompareFunc) (const
         }
     }
     Swap(arr + i * SIZE, pivot, SIZE);
-    if (i != 0) QuickSort(arr, i, SIZE, CompareFunc, lo);
-    QuickSort(arr, hi + 1, SIZE, CompareFunc, i + 1);
+    if (i != 0) QuickSort(arr, i, SIZE, CompareFunc, low_index);
+    QuickSort(arr, high_index + 1, SIZE, CompareFunc, i + 1);
 }
 
 void BubbleSort(void* data, size_t nnums, size_t SIZE, int (*CompareFunc) (const void* a, const void* b))
