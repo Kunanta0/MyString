@@ -8,43 +8,47 @@
 #include "comparators.h"
 //const char* s0 = "Hello";
 
+const int INDEX_SIZE = 10000;
+const int LINE_SIZE = 500;
+
 size_t ReadFromFile(const char* name, const char* index[]);
 void PrintFile(const char* index[], size_t nlines);
 void clear_data(const char* index[], size_t nlines);
 
 int main(void)
 {
-    const char* index[10000];
-    const char* copy_index[10000];
-    size_t nlines = ReadFromFile("Eugene Onegin (2).txt", index);
+
+    const char* index[INDEX_SIZE];
+    const char* copy_index[INDEX_SIZE];
+    size_t nlines = ReadFromFile("Eugene_Onegin.txt", index);
 
     memcpy(copy_index, index, nlines * sizeof(char*));
 
-    QuickSort(index, nlines, sizeof(char*), CompareStrs1);
+    qsort(index, nlines, sizeof(char*), CompareStrsStart);
     PrintFile(index, nlines);
 
-    BubbleSort(index, nlines, sizeof(char*), CompareStrs2);
+    QuickSort(index, nlines, sizeof(char*), CompareStrsEnd);
     PrintFile(index, nlines);
 
     PrintFile(copy_index, nlines);
 
     clear_data(index, nlines);
 
-    int data[] = {1, 2, 3, 4, 5, 6};
-    QuickSort(data, 6, 4, CompareDown);
-    PrintArr(data, 6);
+    /*int data[] = {1, 2, 3, 4, 5, 6};
+    BubbleSort(data, 6, 4, CompareDown);
+    PrintArr(data, 6);*/
 
     return 0;
 }
 
 size_t ReadFromFile(const char* name, const char* index[])
 {
-    FILE* file = fopen(name, "r");
+    FILE* input_file = fopen(name, "r");
 
     size_t nlines = 0;
-    char buffer[10000] = "";
+    char buffer[INDEX_SIZE] = "";
 
-    while (fgets(buffer, 500, file) != NULL)
+    while (fgets(buffer, LINE_SIZE, input_file) != NULL)
     {
         if (Strcmp(buffer, "\n") != 0)
         {
@@ -52,24 +56,24 @@ size_t ReadFromFile(const char* name, const char* index[])
             index[nlines++] = strdup(buffer);
         }
     }
-    fclose(file);
+    fclose(input_file);
 
     return nlines;
 }
 
 void PrintFile(const char* index[], size_t nlines)
 {
-    FILE* fo = fopen("OutputS.txt", "a");
-    for (size_t i = 0;i < nlines;++i) fprintf(fo, "%s", index[i]);
+    FILE* output_file = fopen("output.txt", "a");
+    for (size_t i = 0;i < nlines;++i) fprintf(output_file, "%s", index[i]);
 
-    fprintf(fo, "\n************************************************************************************************\n");
+    fprintf(output_file, "\n************************************************************************************************\n");
 
-    fclose(fo);
+    fclose(output_file);
 }
 
 void clear_data(const char* index[], size_t nlines)
 {
-    for (size_t i = 0; i < nlines;++i)
+    for (size_t i = 0; i < nlines - 1;++i)
     {
         free((void*)(index[i]));
         index[i] = NULL;
